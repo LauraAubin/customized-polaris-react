@@ -19,6 +19,7 @@ export interface Props {
   url?: string;
   measuring?: boolean;
   accessibilityLabel?: string;
+  theme: string;
   onClick?(id: string): void;
 }
 
@@ -77,12 +78,13 @@ export class Tab extends React.PureComponent<CombinedProps, never> {
       panelID,
       measuring,
       accessibilityLabel,
+      theme,
     } = this.props;
 
     const handleClick = onClick && onClick.bind(null, id);
 
     const className = classNames(
-      styles.Tab,
+      styles[`Tab-${theme}`],
       selected && styles['Tab-selected'],
     );
 

@@ -1,3 +1,5 @@
+@import 'src/ThemeablePolarisReact/themes';
+
 $item-min-height: rem(16px);
 $item-min-width: rem(50px);
 $item-vertical-padding: $item-min-height / 2;
@@ -38,52 +40,68 @@ $focus-state-box-shadow-color: rgba(92, 106, 196, 0.8);
   padding: 0;
 }
 
-.Tab {
-  @include unstyled-link;
-  @include unstyled-button;
-  @include text-style-body;
-  @include text-emphasis-subdued;
-  position: relative;
-  justify-content: center;
-  width: 100%;
-  min-width: 100%; // IE11 fix for overflowing flex items from parent container
-  margin-top: 1px;
-  margin-bottom: -1px;
-  padding: 0 spacing();
-  outline: none;
-  text-align: center;
-  white-space: nowrap;
-  text-decoration: none;
-  cursor: pointer;
+@mixin Tab {
+  @each $themeType, $theme in $themes {
+    &-#{$themeType} {
+      // background: map-get($theme, foo);
 
-  &:hover {
-    .Title {
-      @include text-emphasis-normal;
+      @include unstyled-link;
+      @include unstyled-button;
+      @include text-style-body;
+      @include text-emphasis-subdued;
+      position: relative;
+      justify-content: center;
+      width: 100%;
+      min-width: 100%; // IE11 fix for overflowing flex items from parent container
+      margin-top: 1px;
+      margin-bottom: -1px;
+      padding: 0 spacing();
+      outline: none;
+      text-align: center;
+      white-space: nowrap;
       text-decoration: none;
-      border-bottom: border-width(thicker) solid color('sky');
+      cursor: pointer;
+
+      &:hover {
+        .Title {
+          @include text-emphasis-normal;
+          text-decoration: none;
+          border-bottom: border-width(thicker)
+            solid
+            map-get($theme, tab-title-hover);
+        }
+      }
+
+      &:focus {
+        box-shadow: inset 0 0 2px 0 map-get($theme, tab-focus-box-shadow),
+          0 0 2px 0 map-get($theme, tab-focus-box-shadow);
+
+        .Title {
+          @include text-emphasis-normal;
+          border-bottom: border-width(thicker)
+            solid
+            map-get($theme, tab-focus-title-border);
+        }
+      }
+
+      &:visited {
+        color: map-get($theme, tab-visited);
+      }
+
+      &.Tab-selected {
+        // stylelint-disable-next-line selector-max-class
+        .Title {
+          border-bottom: border-width(thicker)
+            solid
+            map-get($theme, tab-selected-title-border);
+        }
+      }
     }
   }
+}
 
-  &:focus {
-    box-shadow: inset 0 0 2px 0 $focus-state-box-shadow-color,
-      0 0 2px 0 $focus-state-box-shadow-color;
-
-    .Title {
-      @include text-emphasis-normal;
-      border-bottom: border-width(thicker) solid color('indigo', 'light');
-    }
-  }
-
-  &:visited {
-    color: color('ink', 'lighter');
-  }
-
-  &.Tab-selected {
-    // stylelint-disable-next-line selector-max-class
-    .Title {
-      border-bottom: border-width(thicker) solid color('indigo');
-    }
-  }
+.Tab {
+  @include Tab;
 }
 
 .Tab-selected {

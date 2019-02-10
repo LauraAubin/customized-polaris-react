@@ -22,6 +22,7 @@ export interface Props {
   activator: React.ReactElement<{}>;
   selected: number;
   tabs: TabDescriptor[];
+  theme: string;
   handleMeasurement(measurements: TabMeasurements): void;
 }
 
@@ -51,6 +52,7 @@ export default class TabMeasurer extends React.PureComponent<Props, never> {
       activator,
       tabToFocus,
       siblingTabHasFocus,
+      theme,
     } = this.props;
 
     const tabsMarkup = tabs.map((tab, index) => {
@@ -64,6 +66,7 @@ export default class TabMeasurer extends React.PureComponent<Props, never> {
           selected={index === selected}
           onClick={noop}
           url={tab.url}
+          theme={theme}
         >
           {tab.content}
         </Tab>

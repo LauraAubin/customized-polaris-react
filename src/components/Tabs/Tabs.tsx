@@ -22,6 +22,8 @@ export interface Props {
   tabs: TabDescriptor[];
   /** Fit tabs to container */
   fitted?: boolean;
+  /** Name of theme */
+  theme?: string;
   /** Callback when tab is selected */
   onSelect?(selectedTabIndex: number): void;
 }
@@ -70,7 +72,7 @@ export default class Tabs extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const {tabs, selected, fitted, children} = this.props;
+    const {tabs, selected, fitted, theme = 'default', children} = this.props;
     const {tabToFocus, visibleTabs, hiddenTabs, showDisclosure} = this.state;
     const disclosureTabs = hiddenTabs.map((tabIndex) => tabs[tabIndex]);
 
@@ -144,6 +146,7 @@ export default class Tabs extends React.PureComponent<Props, State> {
           tabs={tabs}
           siblingTabHasFocus={tabToFocus > -1}
           handleMeasurement={this.handleMeasurement}
+          theme={theme}
         />
         {panelMarkup}
       </div>
@@ -181,7 +184,7 @@ export default class Tabs extends React.PureComponent<Props, State> {
 
   @autobind
   private renderTabMarkup(tab: TabDescriptor, index: number) {
-    const {selected} = this.props;
+    const {selected, theme = 'default'} = this.props;
     const {tabToFocus} = this.state;
 
     return (
@@ -195,6 +198,7 @@ export default class Tabs extends React.PureComponent<Props, State> {
         panelID={tab.panelID || `${tab.id}-panel`}
         accessibilityLabel={tab.accessibilityLabel}
         url={tab.url}
+        theme={theme}
       >
         {tab.content}
       </Tab>
@@ -203,13 +207,13 @@ export default class Tabs extends React.PureComponent<Props, State> {
 
   @autobind
   private handleFocus(event: React.FocusEvent<HTMLUListElement>) {
-    const {selected, tabs} = this.props;
+    const {selected, tabs, theme = 'default'} = this.props;
 
     // If we are explicitly focusing one of the non-selected tabs, use it
     // move the focus to it
     const target = event.target as HTMLElement;
     if (
-      target.classList.contains(styles.Tab) ||
+      target.classList.contains(styles[`Tab-${theme}`]) ||
       target.classList.contains(styles.Item)
     ) {
       let tabToFocus = -1;
@@ -241,7 +245,7 @@ export default class Tabs extends React.PureComponent<Props, State> {
 
     const relatedTarget = event.relatedTarget as HTMLElement;
     if (
-      !relatedTarget.classList.contains(styles.Tab) &&
+      !relatedTarget.classList.contains(styles[`Tab-${theme}`]) &&
       !relatedTarget.classList.contains(styles.Item) &&
       !relatedTarget.classList.contains(styles.DisclosureActivator)
     ) {
@@ -251,6 +255,8 @@ export default class Tabs extends React.PureComponent<Props, State> {
 
   @autobind
   private handleBlur(event: React.FocusEvent<HTMLUListElement>) {
+    const {theme = 'default'} = this.props;
+
     // If we blur and the target is not another tab, forget the focus position
     if (event.relatedTarget == null) {
       this.setState({tabToFocus: -1});
@@ -261,7 +267,7 @@ export default class Tabs extends React.PureComponent<Props, State> {
 
     // If we are going to anywhere other than another tab, lose the last focused tab
     if (
-      !target.classList.contains(styles.Tab) &&
+      !target.classList.contains(styles[`Tab-${theme}`]) &&
       !target.classList.contains(styles.Item)
     ) {
       this.setState({tabToFocus: -1});
