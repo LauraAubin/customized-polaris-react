@@ -3,7 +3,6 @@
 $item-min-height: rem(16px);
 $item-min-width: rem(50px);
 $item-vertical-padding: $item-min-height / 2;
-$focus-state-box-shadow-color: rgba(92, 106, 196, 0.8);
 
 .Tabs {
   display: flex;
@@ -43,8 +42,6 @@ $focus-state-box-shadow-color: rgba(92, 106, 196, 0.8);
 @mixin Tab {
   @each $themeType, $theme in $themes {
     &-#{$themeType} {
-      // background: map-get($theme, foo);
-
       @include unstyled-link;
       @include unstyled-button;
       @include text-style-body;
@@ -177,17 +174,25 @@ $focus-state-box-shadow-color: rgba(92, 106, 196, 0.8);
   display: flex;
 }
 
+@mixin DisclosureActivator {
+  @each $themeType, $theme in $themes {
+    &-#{$themeType} {
+      @include recolor-icon(map-get($theme, disclosure-activator-icon));
+      position: relative;
+      justify-content: center;
+      height: 100%;
+      padding: 0 spacing();
+      background-color: transparent;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      text-align: center;
+    }
+  }
+}
+
 .DisclosureActivator {
-  @include recolor-icon(color('ink', 'lighter'));
-  position: relative;
-  justify-content: center;
-  height: 100%;
-  padding: 0 spacing();
-  background-color: transparent;
-  cursor: pointer;
-  border: none;
-  outline: none;
-  text-align: center;
+  @include DisclosureActivator;
 }
 
 .TabMeasurer {
