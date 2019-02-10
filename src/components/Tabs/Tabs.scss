@@ -1,5 +1,4 @@
-@import 'src/ThemeablePolarisReact/styles';
-@import 'src/ThemeablePolarisReact/themes';
+@import 'src/Themes/styles';
 
 @function findcolor($theme, $styleName) {
   @if map-has-key($theme, $styleName) {
@@ -70,7 +69,6 @@ $item-vertical-padding: $item-min-height / 2;
       white-space: nowrap;
       text-decoration: none;
       cursor: pointer;
-      background: findcolor($theme, background);
 
       &:hover {
         .Title {
