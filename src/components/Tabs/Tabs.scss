@@ -1,15 +1,4 @@
-@import 'src/Themes/styles';
-
-@function findcolor($theme, $styleName) {
-  @if map-has-key($theme, $styleName) {
-    @return map-get($theme, $styleName);
-
-  } @else {
-    $scoped: map-get($themes, 'default');
-
-    @return map-get($scoped, $styleName);
-  }
-}
+@import 'src/Themes/findcolor.scss';
 
 $item-min-height: rem(16px);
 $item-min-width: rem(50px);
@@ -56,7 +45,7 @@ $item-vertical-padding: $item-min-height / 2;
       @include unstyled-link;
       @include unstyled-button;
       @include text-style-body;
-      @include text-emphasis-subdued;
+      @include text-emphasis-subdued(findcolor($theme, tab-text-emphasis));
       position: relative;
       justify-content: center;
       width: 100%;
@@ -72,28 +61,30 @@ $item-vertical-padding: $item-min-height / 2;
 
       &:hover {
         .Title {
-          @include text-emphasis-normal;
+          @include text-emphasis-normal(
+            findcolor($theme, tab-title-emphasis)
+          );
           text-decoration: none;
           border-bottom: border-width(thicker)
             solid
-            map-get($theme, tab-title-hover);
+            findcolor($theme, tab-title-hover);
         }
       }
 
       &:focus {
-        box-shadow: inset 0 0 2px 0 map-get($theme, tab-focus-box-shadow),
-          0 0 2px 0 map-get($theme, tab-focus-box-shadow);
+        box-shadow: inset 0 0 2px 0 findcolor($theme, tab-focus-box-shadow),
+          0 0 2px 0 findcolor($theme, tab-focus-box-shadow);
 
         .Title {
-          @include text-emphasis-normal;
+          @include text-emphasis-normal(findcolor($theme, tab-title-emphasis));
           border-bottom: border-width(thicker)
             solid
-            map-get($theme, tab-focus-title-border);
+            findcolor($theme, tab-focus-title-border);
         }
       }
 
       &:visited {
-        color: map-get($theme, tab-visited);
+        color: findcolor($theme, tab-visited);
       }
 
       &.Tab-selected {
@@ -101,7 +92,7 @@ $item-vertical-padding: $item-min-height / 2;
         .Title {
           border-bottom: border-width(thicker)
             solid
-            map-get($theme, tab-selected-title-border);
+            findcolor($theme, tab-selected-title-border);
         }
       }
     }
@@ -112,8 +103,16 @@ $item-vertical-padding: $item-min-height / 2;
   @include Tab;
 }
 
+@mixin Tab-selected {
+  @each $themeType, $theme in $themes {
+    &-#{$themeType} {
+      @include text-emphasis-normal(findcolor($theme, tab-selected-emphasis));
+    }
+  }
+}
+
 .Tab-selected {
-  @include text-emphasis-normal;
+  @include Tab-selected;
 }
 
 .Title {
@@ -188,7 +187,7 @@ $item-vertical-padding: $item-min-height / 2;
 @mixin DisclosureActivator {
   @each $themeType, $theme in $themes {
     &-#{$themeType} {
-      @include recolor-icon(map-get($theme, disclosure-activator-icon));
+      @include recolor-icon(findcolor($theme, disclosure-activator-icon));
       position: relative;
       justify-content: center;
       height: 100%;

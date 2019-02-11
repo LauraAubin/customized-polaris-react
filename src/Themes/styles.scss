@@ -2,11 +2,14 @@ $focus-state-box-shadow-color: rgba(92, 106, 196, 0.8);
 
 $themes: (
   default: (
+    tab-text-emphasis: color('ink', 'lighter'),
     tab-title-hover: color('sky'),
+    tab-title-emphasis: color('ink'),
     tab-focus-box-shadow: $focus-state-box-shadow-color,
     tab-focus-title-border: color('indigo', 'light'),
     tab-visited: color('ink', 'lighter'),
     tab-selected-title-border: color('indigo'),
+    tab-selected-emphasis: color('ink'),
 
     disclosure-activator-icon: color('ink', 'lighter'),
   ),

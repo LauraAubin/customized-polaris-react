@@ -1,0 +1,12 @@
+@import './styles.scss';
+
+@function findcolor($theme, $styleName) {
+  @if map-has-key($theme, $styleName) {
+    @return map-get($theme, $styleName);
+
+  } @else {
+    $scoped: map-get($themes, 'default');
+
+    @return map-get($scoped, $styleName);
+  }
+}
