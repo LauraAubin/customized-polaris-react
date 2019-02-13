@@ -4,12 +4,21 @@ $item-min-height: rem(16px);
 $item-min-width: rem(50px);
 $item-vertical-padding: $item-min-height / 2;
 
+@mixin Tabs {
+  @each $themeType, $theme in $themes {
+    &-#{$themeType} {
+      display: flex;
+      margin: 0;
+      padding: 0;
+      border-bottom: border();
+      list-style: none;
+      background: findcolor($theme, tab-background);
+    }
+  }
+}
+
 .Tabs {
-  display: flex;
-  margin: 0;
-  padding: 0;
-  border-bottom: border();
-  list-style: none;
+  @include Tabs;
 }
 
 .fitted {
