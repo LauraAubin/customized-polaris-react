@@ -4,12 +4,20 @@ $item-min-height: rem(16px);
 $item-min-width: rem(50px);
 $item-vertical-padding: $item-min-height / 2;
 
+@mixin Tabs {
+  @each $themeType, $theme in $themes {
+    &-#{$themeType} {
+      display: flex;
+      margin: 0;
+      padding: 0;
+      border-bottom: border();
+      list-style: none;
+    }
+  }
+}
+
 .Tabs {
-  display: flex;
-  margin: 0;
-  padding: 0;
-  border-bottom: border();
-  list-style: none;
+  @include Tabs;
 }
 
 .fitted {
@@ -45,7 +53,7 @@ $item-vertical-padding: $item-min-height / 2;
       @include unstyled-link;
       @include unstyled-button;
       @include text-style-body;
-      @include text-emphasis-subdued(findcolor($theme, tab-text-emphasis));
+      @include text-emphasis-subdued(findcolor($theme, tab-title-text));
       position: relative;
       justify-content: center;
       width: 100%;
@@ -62,7 +70,7 @@ $item-vertical-padding: $item-min-height / 2;
       &:hover {
         .Title {
           @include text-emphasis-normal(
-            findcolor($theme, tab-title-emphasis)
+            findcolor($theme, tab-title-hover-emphasis)
           );
           text-decoration: none;
           border-bottom: border-width(thicker)
@@ -76,7 +84,9 @@ $item-vertical-padding: $item-min-height / 2;
           0 0 2px 0 findcolor($theme, tab-focus-box-shadow);
 
         .Title {
-          @include text-emphasis-normal(findcolor($theme, tab-title-emphasis));
+          @include text-emphasis-normal(
+            findcolor($theme, tab-title-hover-emphasis)
+          );
           border-bottom: border-width(thicker)
             solid
             findcolor($theme, tab-focus-title-border);
@@ -90,6 +100,7 @@ $item-vertical-padding: $item-min-height / 2;
       &.Tab-selected {
         // stylelint-disable-next-line selector-max-class
         .Title {
+          color: findcolor($theme, tab-selected-title);
           border-bottom: border-width(thicker)
             solid
             findcolor($theme, tab-selected-title-border);

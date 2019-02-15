@@ -92,7 +92,7 @@ export default class Tabs extends React.PureComponent<Props, State> {
     const disclosureActivatorVisible = visibleTabs.length < tabs.length;
 
     const classname = classNames(
-      styles.Tabs,
+      styles[`Tabs-${theme}`],
       fitted && styles.fitted,
       disclosureActivatorVisible && styles.fillSpace,
     );
@@ -105,7 +105,7 @@ export default class Tabs extends React.PureComponent<Props, State> {
     const activator = (
       <button
         tabIndex={-1}
-        className={styles.DisclosureActivator}
+        className={styles[`DisclosureActivator-${theme}`]}
         onClick={this.handleDisclosureActivatorClick}
       >
         <Icon source="horizontalDots" />
@@ -231,7 +231,7 @@ export default class Tabs extends React.PureComponent<Props, State> {
       return;
     }
 
-    if (target.classList.contains(styles.DisclosureActivator)) {
+    if (target.classList.contains(styles[`DisclosureActivator-${theme}`])) {
       return;
     }
 
@@ -247,7 +247,7 @@ export default class Tabs extends React.PureComponent<Props, State> {
     if (
       !relatedTarget.classList.contains(styles[`Tab-${theme}`]) &&
       !relatedTarget.classList.contains(styles.Item) &&
-      !relatedTarget.classList.contains(styles.DisclosureActivator)
+      !relatedTarget.classList.contains(styles[`DisclosureActivator-${theme}`])
     ) {
       this.setState({tabToFocus: selected});
     }

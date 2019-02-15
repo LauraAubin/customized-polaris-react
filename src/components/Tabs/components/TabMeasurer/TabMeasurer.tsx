@@ -73,7 +73,7 @@ export default class TabMeasurer extends React.PureComponent<Props, never> {
       );
     });
 
-    const classname = classNames(styles.Tabs, styles.TabMeasurer);
+    const classname = classNames(styles[`Tab-${theme}`], styles.TabMeasurer);
 
     return (
       <div className={classname} ref={this.setContainerNode}>
