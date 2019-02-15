@@ -12,7 +12,6 @@ $item-vertical-padding: $item-min-height / 2;
       padding: 0;
       border-bottom: border();
       list-style: none;
-      background: findcolor($theme, tab-background);
     }
   }
 }
@@ -54,7 +53,7 @@ $item-vertical-padding: $item-min-height / 2;
       @include unstyled-link;
       @include unstyled-button;
       @include text-style-body;
-      @include text-emphasis-subdued(findcolor($theme, tab-text-emphasis));
+      @include text-emphasis-subdued(findcolor($theme, tab-title-text));
       position: relative;
       justify-content: center;
       width: 100%;
@@ -71,7 +70,7 @@ $item-vertical-padding: $item-min-height / 2;
       &:hover {
         .Title {
           @include text-emphasis-normal(
-            findcolor($theme, tab-title-emphasis)
+            findcolor($theme, tab-title-hover-emphasis)
           );
           text-decoration: none;
           border-bottom: border-width(thicker)
@@ -85,7 +84,9 @@ $item-vertical-padding: $item-min-height / 2;
           0 0 2px 0 findcolor($theme, tab-focus-box-shadow);
 
         .Title {
-          @include text-emphasis-normal(findcolor($theme, tab-title-emphasis));
+          @include text-emphasis-normal(
+            findcolor($theme, tab-title-hover-emphasis)
+          );
           border-bottom: border-width(thicker)
             solid
             findcolor($theme, tab-focus-title-border);
@@ -99,6 +100,7 @@ $item-vertical-padding: $item-min-height / 2;
       &.Tab-selected {
         // stylelint-disable-next-line selector-max-class
         .Title {
+          color: findcolor($theme, tab-selected-title);
           border-bottom: border-width(thicker)
             solid
             findcolor($theme, tab-selected-title-border);
