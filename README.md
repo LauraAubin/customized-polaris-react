@@ -2,6 +2,18 @@
 
 This is an exploration into allowing themes in the [Polaris component library](https://polaris.shopify.com).
 
+### Assigning the theme to a component
+
+Components take an optional prop named `theme` of type `string`. The theme maps back to the custom `styles.scss` file.
+
+i.e,
+
+```
+<Card title="foo" theme="dark">
+  <p>...</p>
+</Card>
+```
+
 ### Using the components with custom themes
 
 Custom themes are added to [`styles.scss`](https://github.com/LauraAubin/themeable-polaris-react/blob/master/src/Themes/styles.scss) by creating additional map entries.
